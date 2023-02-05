@@ -9,7 +9,7 @@ setup(
     author='Philip Orange',
     email='pypi@philiporange.com',
     url='https://www.github.com/philiporange/base16',
-    version='0.1.1',
+    version='0.1.2',
     description='''
 base16 is like hexadecimal, but with an alphabet chosen to minimise human transcription errors.
 ''',

@@ -2,7 +2,7 @@
 
 import sys
 
-from base16 import base16
+import base16
 
 
 def usage():
@@ -14,26 +14,54 @@ def main(args=None):
     '''Main function. Default entry point.'''
     args = args or sys.argv[1:]
 
-    if len(args) < 2:
+    command = None
+    data = None
+    strict = False
+    filter_invalid = False
+
+    # Parse flags and remove
+    for arg in args[:]: # Copy list to avoid modifying it
+        if arg == '--encode':
+            command = 'encode'
+            args.remove(arg)
+        elif arg == '--decode':
+            command = 'decode'
+            args.remove(arg)
+        elif arg == '--random':
+            command = 'random'
+            args.remove(arg)
+        elif arg == '--strict':
+            strict = True
+            args.remove(arg)
+        elif arg == '--filter':
+            filter_invalid = True
+            args.remove(arg)
+        elif arg.startswith('--'):
+            print('Unknown flag: {}'.format(arg))
+            usage()
+
+    # Parse data
+    if not sys.stdin.isatty():
+        data = sys.stdin.read()
+        data = data.strip()
+
+    elif len(args) > 0:
+        data = args[0]
+
+    # Check arguments
+    if command is None or data is None:
         usage()
 
-    elif args[0] == '--encode':
-        data = args[1]
-        data = data.encode('utf-8')
+    data = data.encode('utf-8')
 
-        out = base16.encode(data)
+    # Run command
+    if command == 'encode':
+        result = base16.encode(data)
+        sys.stdout.buffer.write(result)
 
-        print(out)
-
-    elif args[0] == '--decode':
-        data = args[1]
-        data = data.encode('utf-8')
-
-        strict = '--strict' in args
-        filter_invalid = '--filter' in args
-
+    elif command == 'decode':
         try:
-            out = base16.decode(
+            result = base16.decode(
                 data,
                 strict=strict,
                 filter_invalid=filter_invalid,
@@ -42,10 +70,19 @@ def main(args=None):
             print(exc)
             sys.exit(1)
 
-        print(out)
+        sys.stdout.buffer.write(result)
+
+    elif command == 'random':
+        length = int(data) if data.isdigit() else 16
+
+        result = base16.random(length)
+        sys.stdout.buffer.write(result)
 
     else:
         usage()
+
+    # End with a newline
+    sys.stdout.buffer.write(b'\n')
 
     return 0
 

@@ -1,12 +1,5 @@
 '''
-base16: Hexidecimal encoding/decoding for human-readable codes
-
-Character set:
-
-    A B C D
-    E G H K
-    P R S T
-    W X Y Z
+Human-readable, compact binary data encoding/decoding.
 '''
 
 import os
