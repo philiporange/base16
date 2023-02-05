@@ -1,11 +1,11 @@
-# base16
+# Base16
 
-base16 is hexidecimal encoding with a different character set - chosen to minimize ambiguity between letters. It is useful for human-input codes. By default, we map alphanumeric characters outside the base16 character set to ones of closest similarity [1] within it.
+A human-readable, compact binary data representation. Base16 is the hexidecimal system with a different character set - chosen to minimize ambiguity between letters. It is useful for high entropy inputs like voucher codes and confirmation codes. By default, when an alphanumeric character outside the base16 character set is decoded it is first replaced with the most similar valid character. The main goal is to minimise user frustration around these types of data input.
 
 
-# Character set map
+# Character Set
 
-| Hexidecimal | base16 |
+| Hexidecimal | Base16 |
 |:-----------:|:------:|
 |      0      |   A    |
 |      1      |   B    |
@@ -34,22 +34,41 @@ pip install base16
 
 ## Python
 ```python3
-import base16
+>>> import base16
 
-encoded = base16.encode(b'Hello, World!')
-decoded = base16.decode(b'EPHGHWHWHZCWCAKKHZKCHWHECB')
+>>> base16.encode(b'Hello, World!')
+b'EPHGHWHWHZCWCAKKHZKCHWHECB'
+
+>>> base16.decode(b'EPHGHWHWHZCWCAKKHZKCHWHECB')
+b'Hello, World!'
+
+>>> base16.random(16)
+b'BABKXPWCBBPZDGPB'
 ```
 
 ## Command Line
 ```bash
-bash16 --encode "Hello, World!"
-bash16 --decode "EPHGHWHWHZCWCAKKHZKCHWHECB"
+> bash16 --encode "Hello, World!"
+EPHGHWHWHZCWCAKKHZKCHWHECB
+
+> bash16 --decode "EPHGHWHWHZCWCAKKHZKCHWHECB"
+Hello, World!
+
+> base16 --random 32
+PKCTPECYBZGGXKRATBCCHGWDDECKCWCA
+
+> echo "some piped data" | base16 --encode
+KDHZHXHGCAKAHRKAHGHECAHEHBKEHB
+
+> echo "KDHZHXHGCAKAHRKAHGHECAHEHBKEHB" | base16 --decode
+some piped data
+
 ```
 
 
-# Fuzzy Matching
+# Decoding Incorrect Characters
 
-When decoding characters outside the base16 charset, we substitute a valid character that is most commonly mistaken for it. 
+If the user tries to decode a character not included in the base16 character set, we first replace it with the most-likely intended valid character. These replacement characters were chosen from a 1983 study [1] of four male university students' transcription errors. When a more representative study is found, these values can be safely changed later.
 
 | Invalid | Valid |
 |:-------:|:-----:|
@@ -73,8 +92,6 @@ When decoding characters outside the base16 charset, we substitute a valid chara
 |    Q    |   D   |
 |    U    |   W   |
 |    V    |   Y   |
-
-Letter mappings above were chosen based on confusion scores in [1].
 
 
 # References
