@@ -37,7 +37,7 @@ def main(args=None):
             filter_invalid = True
             args.remove(arg)
         elif arg.startswith('--'):
-            print('Unknown flag: {}'.format(arg))
+            print(f'Unknown flag: "{arg}"')
             usage()
 
     # Parse data

@@ -1,0 +1,57 @@
+{
+  "name": "base16",
+  "short_description": "A human-readable, compact binary encoding using a character set designed to minimize human transcription errors.",
+  "long_description": "Base16 is a hexadecimal-like encoding system that uses a carefully chosen alphabet (A, B, C, D, E, G, H, K, P, R, S, T, W, X, Y, Z) instead of the standard 0-9a-f characters. It is designed to minimize user frustration and transcription errors when dealing with high-entropy data such as voucher codes, confirmation codes, and verification tokens. The project includes error-correction capability that automatically maps similar-looking invalid characters to the correct base16 characters based on 1983 research on human transcription errors. It provides both a Python library API and a command-line interface for encoding, decoding, and generating random base16 strings.",
+  "keywords": [
+    "encoding",
+    "binary-encoding",
+    "hexadecimal",
+    "base-encoding",
+    "character-set",
+    "error-correction",
+    "user-experience",
+    "voucher-codes",
+    "verification-codes",
+    "confirmation-codes",
+    "cli-tool",
+    "python-library",
+    "data-representation"
+  ],
+  "primary_language": "Python",
+  "languages": [
+    "Python"
+  ],
+  "frameworks": [],
+  "modules": [
+    {
+      "path": "src/base16/base16.py",
+      "description": "Core encoding and decoding logic with character mapping tables and fuzzy matching for similar-looking characters."
+    },
+    {
+      "path": "src/base16/__init__.py",
+      "description": "Package initialization that exports public API functions (encode, decode, random, encode_hex, decode_hex)."
+    },
+    {
+      "path": "src/base16/__main__.py",
+      "description": "Command-line interface implementation with argument parsing for encode, decode, and random operations."
+    },
+    {
+      "path": "test/test_base16.py",
+      "description": "Test suite covering encoding, decoding with strict/fuzzy modes, hex operations, random generation, and performance benchmarks."
+    }
+  ],
+  "git": {
+    "is_repo": true,
+    "remote_url": "git@github.com:philiporange/base16.git",
+    "github_name": "philiporange/base16",
+    "default_branch": "main",
+    "last_commit": "2023-02-05T20:58:03+00:00"
+  },
+  "stats": {
+    "files": 10,
+    "lines_of_code": 436,
+    "size_bytes": 75577
+  },
+  "generated_at": "2025-12-06T23:11:27.513387",
+  "generator_version": "1.0.0"
+}
